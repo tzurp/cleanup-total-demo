@@ -1,12 +1,12 @@
-import {cleanuptotal} from "wdio-cleanuptotal-service"
+import {cleanuptotal} from "wdio-cleanuptotal-service";
 
 describe("Cleanup suite", ()=> {
     it("Cleanup success", ()=> {
         console.log("Create user1");
-        cleanuptotal.addCleanup(()=> { console.log("Deleting user1"); throw new Error("Intentional user creation");});
+        cleanuptotal.addCleanup(()=> { console.log("Deleting user1"); throw new Error("Intentional error in user creation");});
 
         console.log("Create investment plan1");
-        cleanuptotal.addCleanup(()=> { console.log("Deleting investment plan1"); throw new Error("Intentional exception investment");});
+        cleanuptotal.addCleanup(()=> { console.log("Deleting investment plan1"); throw new Error("Intentional error in investment plan creation");});
 
         console.log("deposit funds $1000");
         cleanuptotal.addCleanup(()=> console.log("Removing funds $1000"));

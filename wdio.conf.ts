@@ -10,8 +10,8 @@ export const config = {
             project: './tsconfig.json'
         }
     },
-    
-    
+
+
     //
     // ==================
     // Specify Test Files
@@ -58,35 +58,35 @@ export const config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [
-    //     {
-    
-    //     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-    //     // grid with only 5 firefox instances available you can make sure that not more than
-    //     // 5 instances get started at a time.
-    //     maxInstances: 5,
-    //     //
-    //     browserName: 'chrome',
-    //     acceptInsecureCerts: true
-    //     // If outputDir is provided WebdriverIO can capture driver session logs
-    //     // it is possible to configure which logTypes to include/exclude.
-    //     // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
-    //     // excludeDriverLogs: ['bugreport', 'server'],
-    // }
-    {
-        maxInstances: 5,
-        browserName: 'firefox',
-        acceptInsecureCerts: true,
-        'moz:firefoxOptions': {
-            binary: 'C:\\Program Files\\Mozilla Firefox\\firefox.exe',
+        //     {
 
-            // flag to activate Firefox headless mode (see https://github.com/mozilla/geckodriver/blob/master/README.md#firefox-capabilities for more details about moz:firefoxOptions)
-            args: [
-                //'-headless'
+        //     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
+        //     // grid with only 5 firefox instances available you can make sure that not more than
+        //     // 5 instances get started at a time.
+        //     maxInstances: 5,
+        //     //
+        //     browserName: 'chrome',
+        //     acceptInsecureCerts: true
+        //     // If outputDir is provided WebdriverIO can capture driver session logs
+        //     // it is possible to configure which logTypes to include/exclude.
+        //     // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
+        //     // excludeDriverLogs: ['bugreport', 'server'],
+        // }
+        {
+            maxInstances: 5,
+            browserName: 'firefox',
+            acceptInsecureCerts: true,
+            'moz:firefoxOptions': {
+                binary: 'C:\\Program Files\\Mozilla Firefox\\firefox.exe',
 
-            ]
+                // flag to activate Firefox headless mode (see https://github.com/mozilla/geckodriver/blob/master/README.md#firefox-capabilities for more details about moz:firefoxOptions)
+                args: [
+                    //'-headless'
+
+                ]
+            }
         }
-    }
-],
+    ],
     //
     // ===================
     // Test Configurations
@@ -134,8 +134,20 @@ export const config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['chromedriver', 'cleanuptotal'],
-    
+    services: [
+        'chromedriver',
+        [
+            'cleanuptotal',
+            {
+                // Use a custom logger function to write messages to the test report
+                //customLoggerMethod: console.log(), // TODO: replace with your own logger function if needed
+
+                // Only write to the log when an error occurs to reduce clutter
+                logErrorsOnly: false, // TODO: consider changing to 'true' if you have too many messages in the report
+            }
+        ]
+    ],
+
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: https://webdriver.io/docs/frameworks
@@ -159,7 +171,7 @@ export const config = {
     reporters: ['spec'],
 
 
-    
+
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
